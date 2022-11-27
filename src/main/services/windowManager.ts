@@ -29,7 +29,7 @@ class MainInit {
   // 主窗口函数
   createMainWindow() {
     this.mainWindow = new BrowserWindow({
-      titleBarStyle: config.IsUseSysTitle ? 'default' : 'hidden',
+      titleBarStyle: 'default',
       ...Object.assign(mainWindowConfig, {})
     })
     // 赋予模板

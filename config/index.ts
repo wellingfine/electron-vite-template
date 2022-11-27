@@ -5,7 +5,7 @@ export default {
   build: {
     env: prod,
     // 示例
-    hotPublishUrl:"http://umbrella22.github.io/electron-vite-template",
+    hotPublishUrl: "http://umbrella22.github.io/electron-vite-template",
     hotPublishConfigName: "update-config"
   },
   dev: {
@@ -18,6 +18,5 @@ export default {
   DllFolder: '',
   HotUpdateFolder: 'update',
   UseStartupChart: true,
-  IsUseSysTitle: false,
   BuiltInServerPort: 25565
 }
