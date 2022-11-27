@@ -6,29 +6,8 @@
         <span class="title"> </span>
         <system-information></system-information>
       </div>
-
       <div class="right-side">
         <div class="doc">
-          <div class="title alt"></div>
-          <el-button type="primary" round @click="open()"> open</el-button>
-          <el-button type="primary" round @click="CheckUpdate('one')"
-            >CheckUpdate
-          </el-button>
-        </div>
-        <div class="doc">
-          <el-button type="primary" round @click="CheckUpdate('two')">
-            CheckUpdate('two')
-          </el-button>
-          <el-button type="primary" round @click="CheckUpdate('three')">
-            CheckUpdate('three')
-          </el-button>
-          <el-button type="primary" round @click="CheckUpdate('threetest')">
-            CheckUpdate('threetest'
-          </el-button>
-
-          <el-button type="primary" round @click="CheckUpdate('four')">
-            CheckUpdate('four')
-          </el-button>
           <el-button type="primary" round @click="StartServer">
             StartServer
           </el-button>
@@ -42,14 +21,6 @@
           <el-button type="primary" round @click="openPreloadWindow">
             openPreloadWindow
           </el-button>
-        </div>
-        <div class="doc">
-          <el-button type="primary" round @click="openNewWin">
-            openNewWin
-          </el-button>
-          <el-button type="primary" round @click="printDemo">{{
-            printDemo
-          }}</el-button>
         </div>
         <div class="doc">
           <el-pagination
@@ -130,10 +101,6 @@ ipcRenderer.invoke("get-static-path").then((res) => {
   console.log("staticPath", res);
 });
 
-function printDemo() {
-  ipcRenderer.invoke("openPrintDemoWindow");
-}
-
 function handleSizeChange(val: number) {
   elPageSize.value = val;
 }
@@ -146,12 +113,6 @@ function crash() {
   process.crash();
 }
 
-function openNewWin() {
-  let data = {
-    url: "/form/index",
-  };
-  ipcRenderer.invoke("open-win", data);
-}
 function getMessage() {
   message().then((res) => {
     ElMessageBox.alert(res.data, "提示", {
@@ -177,33 +138,7 @@ function StartServer() {
     }
   });
 }
-// 获取electron方法
-function open() {}
-function CheckUpdate(data) {
-  switch (data) {
-    case "one":
-      ipcRenderer.invoke("check-update");
-      console.log("启动检查");
-      break;
-    case "two":
-      ipcRenderer.invoke("start-download").then(() => {
-        dialogVisible.value = true;
-      });
-      break;
-    case "three":
-      ipcRenderer.invoke("hot-update");
-      break;
-    case "threetest":
-      alert("更新后再次点击没有提示");
-      ipcRenderer.invoke("hot-update-test");
-      break;
-    case "four":
-      showForcedUpdate.value = true;
-      break;
-    default:
-      break;
-  }
-}
+
 function openPreloadWindow() {
   ElMessageBox.alert("请移步项目的strict分支", "提示", {
     confirmButtonText: "确定",
