@@ -8,21 +8,6 @@
       </div>
       <div class="right-side">
         <div class="doc">
-          <el-button type="primary" round @click="StartServer">
-            StartServer
-          </el-button>
-          <el-button type="primary" round @click="StopServer">
-            StopServer
-          </el-button>
-          <el-button type="primary" round @click="getMessage">
-            getMessage
-          </el-button>
-          <el-button type="primary" round @click="crash"> crash </el-button>
-          <el-button type="primary" round @click="openPreloadWindow">
-            openPreloadWindow
-          </el-button>
-        </div>
-        <div class="doc">
           <el-pagination
             :current-page="elCPage"
             :page-sizes="[100, 200, 300, 400]"
@@ -107,43 +92,6 @@ function handleSizeChange(val: number) {
 
 function handleCurrentChange(val: number) {
   elCPage.value = val;
-}
-
-function crash() {
-  process.crash();
-}
-
-function getMessage() {
-  message().then((res) => {
-    ElMessageBox.alert(res.data, "提示", {
-      confirmButtonText: "确定",
-    });
-  });
-}
-function StopServer() {
-  ipcRenderer.invoke("stop-server").then((res) => {
-    ElMessage({
-      type: "success",
-      message: "已关闭",
-    });
-  });
-}
-function StartServer() {
-  ipcRenderer.invoke("start-server").then((res) => {
-    if (res) {
-      ElMessage({
-        type: "success",
-        message: res,
-      });
-    }
-  });
-}
-
-function openPreloadWindow() {
-  ElMessageBox.alert("请移步项目的strict分支", "提示", {
-    confirmButtonText: "确定",
-    callback: (action) => {},
-  });
 }
 
 function handleClose() {

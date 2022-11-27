@@ -1,6 +1,5 @@
 import { ipcMain, dialog, BrowserWindow, app } from 'electron'
 import config from '@config/index'
-import Server from '../server'
 import { winURL, preloadURL, staticPaths } from '../config/StaticPath'
 import { updater } from './HotUpdater'
 import { updater as updaterTest } from './HotUpdaterTest'
@@ -47,29 +46,6 @@ export default {
         arg.title,
         arg.message
       )
-    })
-    ipcMain.handle('start-server', async () => {
-      try {
-        const serveStatus = await Server.StatrServer()
-        console.log(serveStatus)
-        return serveStatus
-      } catch (error) {
-        dialog.showErrorBox(
-          '错误',
-          error
-        )
-      }
-    })
-    ipcMain.handle('stop-server', async (event, arg) => {
-      try {
-        const serveStatus = await Server.StopServer()
-        return serveStatus
-      } catch (error) {
-        dialog.showErrorBox(
-          '错误',
-          error
-        )
-      }
     })
     ipcMain.handle('hot-update', (event, arg) => {
       updater(BrowserWindow.fromWebContents(event.sender))
