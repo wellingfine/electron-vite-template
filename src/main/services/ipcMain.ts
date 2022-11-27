@@ -1,7 +1,6 @@
 import { ipcMain, dialog, BrowserWindow, app } from 'electron'
 import config from '@config/index'
 import { winURL, preloadURL, staticPaths } from '../config/StaticPath'
-import { otherWindowConfig } from "../config/windowsConfig"
 import { UpdateStatus } from 'electron_updater_node_core'
 
 export default {
