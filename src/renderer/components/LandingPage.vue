@@ -21,29 +21,10 @@
         </div>
       </div>
     </main>
-    <el-dialog
-      title="进度"
-      v-model="dialogVisible"
-      :before-close="handleClose"
-      center
-      width="14%"
-      top="45vh"
-    >
-      <div class="conten">
-        <el-progress
-          type="dashboard"
-          :percentage="percentage"
-          :color="colors"
-          :status="progressStaus"
-        ></el-progress>
-      </div>
-    </el-dialog>
-    <update-progress v-model="showForcedUpdate" />
   </div>
 </template>
 
 <script setup lang="ts">
-import UpdateProgress from "./updataProgress/index.vue";
 import { message } from "@renderer/api/login";
 import logo from "@renderer/assets/logo.png";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -97,109 +78,6 @@ function handleCurrentChange(val: number) {
 function handleClose() {
   dialogVisible.value = false;
 }
-ipcRenderer.on("download-progress", (event, arg) => {
-  percentage.value = Number(arg);
-});
-ipcRenderer.on("download-error", (event, arg) => {
-  if (arg) {
-    progressStaus = "exception";
-    percentage.value = 40;
-    colors.value = "#d81e06";
-  }
-});
-ipcRenderer.on("download-paused", (event, arg) => {
-  if (arg) {
-    progressStaus = "warning";
-    ElMessageBox.alert("下载由于未知原因被中断！", "提示", {
-      confirmButtonText: "重试",
-      callback: (action) => {
-        ipcRenderer.invoke("start-download");
-      },
-    });
-  }
-});
-ipcRenderer.on("download-done", (event, age) => {
-  filePath.value = age.filePath;
-  progressStaus = "success";
-  ElMessageBox.alert("更新下载完成！", "提示", {
-    confirmButtonText: "确定",
-    callback: (action) => {
-      shell.openPath(filePath.value);
-    },
-  });
-});
-// electron-updater的更新监听
-ipcRenderer.on("UpdateMsg", (event, age) => {
-  switch (age.state) {
-    case -1:
-      const msgdata = {
-        title: "发生错误",
-        message: age.msg,
-      };
-      dialogVisible.value = false;
-      ipcRenderer.invoke("open-errorbox", msgdata);
-      break;
-    case 0:
-      ElMessage("正在检查更新");
-      break;
-    case 1:
-      ElMessage({
-        type: "success",
-        message: "已检查到新版本，开始下载",
-      });
-      dialogVisible.value = true;
-      break;
-    case 2:
-      ElMessage({ type: "success", message: "无新版本" });
-      break;
-    case 3:
-      percentage = age.msg.percent.toFixed(1);
-      break;
-    case 4:
-      progressStaus = "success";
-      ElMessageBox.alert("更新下载完成！", "提示", {
-        confirmButtonText: "确定",
-        callback: (action) => {
-          ipcRenderer.invoke("confirm-update");
-        },
-      });
-      break;
-    default:
-      break;
-  }
-});
-ipcRenderer.on("hot-update-status", (event, msg) => {
-  switch (msg.status) {
-    case "downloading":
-      ElMessage("正在下载");
-      break;
-    case "moving":
-      ElMessage("正在移动文件");
-      break;
-    case "finished":
-      ElMessage.success("成功,请重启");
-      break;
-    case "failed":
-      ElMessage.error(msg.message.message);
-      break;
-
-    default:
-      break;
-  }
-  console.log(msg);
-  updateStatus = msg.status;
-});
-onUnmounted(() => {
-  console.log("销毁了哦");
-  ipcRenderer.removeAllListeners("confirm-message");
-  ipcRenderer.removeAllListeners("download-done");
-  ipcRenderer.removeAllListeners("download-paused");
-  ipcRenderer.removeAllListeners("confirm-stop");
-  ipcRenderer.removeAllListeners("confirm-start");
-  ipcRenderer.removeAllListeners("confirm-download");
-  ipcRenderer.removeAllListeners("download-progress");
-  ipcRenderer.removeAllListeners("download-error");
-});
 </script>
 
 <style>

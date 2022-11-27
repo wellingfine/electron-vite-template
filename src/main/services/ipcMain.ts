@@ -1,8 +1,6 @@
 import { ipcMain, dialog, BrowserWindow, app } from 'electron'
 import config from '@config/index'
 import { winURL, preloadURL, staticPaths } from '../config/StaticPath'
-import { updater } from './HotUpdater'
-import { updater as updaterTest } from './HotUpdaterTest'
 import { otherWindowConfig } from "../config/windowsConfig"
 import { UpdateStatus } from 'electron_updater_node_core'
 
@@ -46,25 +44,6 @@ export default {
         arg.title,
         arg.message
       )
-    })
-    ipcMain.handle('hot-update', (event, arg) => {
-      updater(BrowserWindow.fromWebContents(event.sender))
-    })
-    ipcMain.handle('hot-update-test', async (event, arg) => {
-      console.log('hot-update-test')
-      try {
-        let updateInfo = await updaterTest(BrowserWindow.fromWebContents(event.sender));
-        if (updateInfo === UpdateStatus.Success) {
-          app.quit();
-        } else if (updateInfo === UpdateStatus.HaveNothingUpdate) {
-          console.log('不需要更新');
-        } else if (updateInfo === UpdateStatus.Failed) {
-          console.error('更新出错');
-        }
-      } catch (error) {
-        // 更新出错
-        console.error('更新出错');
-      }
     })
   }
 }
