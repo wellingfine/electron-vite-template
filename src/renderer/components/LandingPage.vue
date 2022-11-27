@@ -3,63 +3,52 @@
     <img id="logo" :src="logo" alt="electron-vue" />
     <main>
       <div class="left-side">
-        <span class="title">
-          {{ $t("welcome") }}
-        </span>
+        <span class="title"> </span>
         <system-information></system-information>
       </div>
 
       <div class="right-side">
         <div class="doc">
-          <div class="title alt">
-            {{ $t("buttonTips") }}
-          </div>
-          <el-button type="primary" round @click="open()">
-            {{ $t("buttons.console") }}
-          </el-button>
-          <el-button type="primary" round @click="CheckUpdate('one')">
-            {{ $t("buttons.checkUpdate") }}
+          <div class="title alt"></div>
+          <el-button type="primary" round @click="open()"> open</el-button>
+          <el-button type="primary" round @click="CheckUpdate('one')"
+            >CheckUpdate
           </el-button>
         </div>
         <div class="doc">
           <el-button type="primary" round @click="CheckUpdate('two')">
-            {{ $t("buttons.checkUpdate2") }}
+            CheckUpdate('two')
           </el-button>
           <el-button type="primary" round @click="CheckUpdate('three')">
-            {{ $t("buttons.checkUpdateInc") }}
+            CheckUpdate('three')
           </el-button>
           <el-button type="primary" round @click="CheckUpdate('threetest')">
-            {{ $t("buttons.incrementalUpdateTest") }}
+            CheckUpdate('threetest'
           </el-button>
 
           <el-button type="primary" round @click="CheckUpdate('four')">
-            {{ $t("buttons.ForcedUpdate") }}
+            CheckUpdate('four')
           </el-button>
           <el-button type="primary" round @click="StartServer">
-            {{ $t("buttons.startServer") }}
+            StartServer
           </el-button>
           <el-button type="primary" round @click="StopServer">
-            {{ $t("buttons.stopServer") }}
+            StopServer
           </el-button>
           <el-button type="primary" round @click="getMessage">
-            {{ $t("buttons.viewMessage") }}
+            getMessage
           </el-button>
-          <el-button type="primary" round @click="crash">
-            {{ $t("buttons.simulatedCrash") }}
-          </el-button>
+          <el-button type="primary" round @click="crash"> crash </el-button>
           <el-button type="primary" round @click="openPreloadWindow">
-            {{ $t("buttons.openPreloadWindow") }}
+            openPreloadWindow
           </el-button>
         </div>
         <div class="doc">
           <el-button type="primary" round @click="openNewWin">
-            {{ $t("buttons.openNewWindow") }}
+            openNewWin
           </el-button>
-          <el-button type="primary" round @click="changeLanguage">{{
-            $t("buttons.changeLanguage")
-          }}</el-button>
           <el-button type="primary" round @click="printDemo">{{
-            $t("buttons.printDemo")
+            printDemo
           }}</el-button>
         </div>
         <div class="doc">
@@ -98,13 +87,11 @@
 </template>
 
 <script setup lang="ts">
-import SystemInformation from "./LandingPage/SystemInformation.vue";
 import UpdateProgress from "./updataProgress/index.vue";
 import { message } from "@renderer/api/login";
 import logo from "@renderer/assets/logo.png";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { onUnmounted, Ref, ref } from "vue";
-import { i18n, setLanguage } from "@renderer/i18n";
 
 import useStoreTemplate from "@store/template";
 import TitleBar from "./common/TitleBar.vue";
@@ -143,10 +130,6 @@ let elCPage = ref(1);
 ipcRenderer.invoke("get-static-path").then((res) => {
   console.log("staticPath", res);
 });
-
-function changeLanguage() {
-  setLanguage(i18n.global.locale === "zh-cn" ? "en" : "zh-cn");
-}
 
 function printDemo() {
   ipcRenderer.invoke("openPrintDemoWindow");
@@ -224,10 +207,9 @@ function CheckUpdate(data) {
 }
 function openPreloadWindow() {
   ElMessageBox.alert("请移步项目的strict分支", "提示", {
-      confirmButtonText: "确定",
-      callback: (action) => {
-      },
-    });
+    confirmButtonText: "确定",
+    callback: (action) => {},
+  });
 }
 
 function handleClose() {
