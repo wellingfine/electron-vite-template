@@ -94,7 +94,6 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { onUnmounted, Ref, ref } from "vue";
 
 import useStoreTemplate from "@store/template";
-import TitleBar from "./common/TitleBar.vue";
 
 const storeTemplate = useStoreTemplate();
 

@@ -2,19 +2,17 @@ import setIpc from './ipcMain'
 import config from '@config/index'
 import menuconfig from '../config/menu'
 import { app, BrowserWindow, Menu, dialog } from 'electron'
-import { winURL, loadingURL } from '../config/StaticPath'
+import { winURL } from '../config/StaticPath'
 import { mainWindowConfig } from "../config/windowsConfig"
 
 class MainInit {
 
   public winURL: string = ''
-  public shartURL: string = ''
   public loadWindow: BrowserWindow = null
   public mainWindow: BrowserWindow = null
 
   constructor() {
     this.winURL = winURL
-    this.shartURL = loadingURL
     if (process.env.NODE_ENV === 'development') {
       menuconfig.push({
         label: '开发者设置',
@@ -47,7 +45,6 @@ class MainInit {
       if (process.env.NODE_ENV === 'development') {
         this.mainWindow.webContents.openDevTools({ mode: 'undocked', activate: true })
       }
-      if (config.UseStartupChart) this.loadWindow.destroy()
     })
     // 当确定渲染进程卡死时，分类型进行告警操作
     app.on('render-process-gone', (event, webContents, details) => {
@@ -153,34 +150,10 @@ class MainInit {
       this.mainWindow = null
     })
   }
-  // 加载窗口函数
-  loadingWindow(loadingURL: string) {
-    this.loadWindow = new BrowserWindow({
-      width: 400,
-      height: 600,
-      frame: false,
-      skipTaskbar: true,
-      transparent: true,
-      resizable: false,
-      webPreferences: { experimentalFeatures: true }
-    })
 
-    this.loadWindow.loadURL(loadingURL)
-    this.loadWindow.show()
-    this.loadWindow.setAlwaysOnTop(true)
-    // 延迟两秒可以根据情况后续调快，= =，就相当于个，sleep吧，就那种。 = =。。。
-    setTimeout(() => {
-      this.createMainWindow()
-    }, 1500)
-  }
   // 初始化窗口函数
   initWindow() {
-    if (config.UseStartupChart) {
-      return this.loadingWindow(this.shartURL)
-    } else {
-      return this.createMainWindow()
-    }
-
+    return this.createMainWindow()
   }
 }
 export default MainInit

@@ -65,7 +65,6 @@ function getUrl(devPath: string, proPath: string, hash: string = "", search: str
   return url.href;
 }
 export const winURL = getUrl("", join(__dirname, '..', 'renderer', 'index.html'));
-export const loadingURL = getUrl("/loader.html", `${staticPath.__static}/loader.html`);
 export const preloadURL = getUrl("/preload.html", `${staticPath.__static}/preload.html`);
 export const printURL = getUrl("", join(__dirname, '..', 'renderer', 'index.html'), "#/Print");
 export const preloadPath = isDev ? join(app.getAppPath(), "..", "preload.js") : join(app.getAppPath(), "dist", "electron", "preload.js");
