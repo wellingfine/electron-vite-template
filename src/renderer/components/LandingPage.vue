@@ -6,26 +6,11 @@
         <span class="title"> </span>
         <system-information></system-information>
       </div>
-      <div class="right-side">
-        <div class="doc">
-          <el-pagination
-            :current-page="elCPage"
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="elPageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="400"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-          >
-          </el-pagination>
-        </div>
-      </div>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { message } from "@renderer/api/login";
 import logo from "@renderer/assets/logo.png";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { onUnmounted, Ref, ref } from "vue";
@@ -62,22 +47,6 @@ let updateStatus = ref("");
 
 let elPageSize = ref(100);
 let elCPage = ref(1);
-
-ipcRenderer.invoke("get-static-path").then((res) => {
-  console.log("staticPath", res);
-});
-
-function handleSizeChange(val: number) {
-  elPageSize.value = val;
-}
-
-function handleCurrentChange(val: number) {
-  elCPage.value = val;
-}
-
-function handleClose() {
-  dialogVisible.value = false;
-}
 </script>
 
 <style>

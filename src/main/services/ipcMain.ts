@@ -26,9 +26,6 @@ export default {
     ipcMain.handle('app-close', (event, args) => {
       app.quit()
     })
-    ipcMain.handle('get-static-path', (event, args) => {
-      return staticPaths
-    })
     ipcMain.handle('open-messagebox', async (event, arg) => {
       const res = await dialog.showMessageBox(BrowserWindow.fromWebContents(event.sender), {
         type: arg.type || 'info',
