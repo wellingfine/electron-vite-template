@@ -16,7 +16,4 @@ export default {
   },
   DisableF12: true,
   DllFolder: '',
-  HotUpdateFolder: 'update',
-  UseStartupChart: true,
-  BuiltInServerPort: 25565
 }

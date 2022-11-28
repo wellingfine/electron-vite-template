@@ -4,7 +4,6 @@
     <main>
       <div class="left-side">
         <span class="title"> </span>
-        <system-information></system-information>
       </div>
     </main>
   </div>
