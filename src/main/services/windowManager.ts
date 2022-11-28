@@ -1,5 +1,3 @@
-import setIpc from './ipcMain'
-import config from '@config/index'
 import menuconfig from '../config/menu'
 import { app, BrowserWindow, Menu, dialog } from 'electron'
 import { winURL } from '../config/StaticPath'
@@ -8,7 +6,6 @@ import { mainWindowConfig } from "../config/windowsConfig"
 class MainInit {
 
   public winURL: string = ''
-  public loadWindow: BrowserWindow = null
   public mainWindow: BrowserWindow = null
 
   constructor() {
@@ -23,8 +20,6 @@ class MainInit {
         }]
       })
     }
-    // 启用协议
-    setIpc.Mainfunc()
   }
   // 主窗口函数
   createMainWindow() {
