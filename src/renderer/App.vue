@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { ElConfigProvider } from "element-plus";
 </script>
 
 <style></style>
